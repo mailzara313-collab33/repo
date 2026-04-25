@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gold: #c8992a;
+  --gold-dim: rgba(200, 153, 42, 0.15);
+  --gold-border: rgba(200, 153, 42, 0.25);
+  --dark-bg: #08080a;
+  --dark-surface: #0f0f12;
+  --dark-card: #17171b;
+  --text-muted: rgba(255, 255, 255, 0.45);
+  --text-dim: rgba(255, 255, 255, 0.65);
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-gold: rgba(200, 153, 42, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--dark-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+/* Grain texture overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+/* Selection */
+::selection {
+  background: rgba(200, 153, 42, 0.3);
+  color: #ffffff;
+}
+
+/* ─── Reveal animations ─── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal-fade] {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+[data-reveal-fade].is-visible {
+  opacity: 1;
+}
+
+[data-reveal-left] {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-reveal-left].is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+[data-reveal-right] {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-reveal-right].is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Delay utilities */
+[data-delay="100"] { transition-delay: 0.1s; }
+[data-delay="200"] { transition-delay: 0.2s; }
+[data-delay="300"] { transition-delay: 0.3s; }
+[data-delay="400"] { transition-delay: 0.4s; }
+[data-delay="500"] { transition-delay: 0.5s; }
+[data-delay="600"] { transition-delay: 0.6s; }
+[data-delay="700"] { transition-delay: 0.7s; }
+
+/* ─── Gold line horizontal ─── */
+.line-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.3;
+}
+
+.line-gold-left {
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  opacity: 0.35;
+}
+
+/* ─── Architectural grid ─── */
+.arch-grid {
+  background-image: var(--tw-gradient-stops);
+  background-size: 80px 80px;
+}
+
+/* ─── Section label ─── */
+.section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+/* ─── Gold gradient text ─── */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #e0b84a 0%, #c8992a 50%, #9a7020 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── SVG path draw animation ─── */
+.path-draw {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  transition: stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.path-draw.drawn {
+  stroke-dashoffset: 0;
+}
+
+/* ─── Card hover styles ─── */
+.card-glow {
+  transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.card-glow:hover {
+  box-shadow: 0 0 40px rgba(200, 153, 42, 0.08), 0 0 0 1px rgba(200,153,42,0.18);
+  border-color: rgba(200, 153, 42, 0.3) !important;
+  transform: translateY(-3px);
+}
+
+/* ─── Scrollbar on process timeline ─── */
+.timeline-line {
+  position: relative;
+}
+.timeline-line::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border-subtle);
+}
+.timeline-progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  background: var(--gold);
+  transition: height 0.05s linear;
+}
+
+/* ─── Stat number ─── */
+.stat-number {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ─── Button styles ─── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: var(--gold);
+  color: #000;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  text-decoration: none;
+}
+.btn-primary:hover {
+  background: #dfa02a;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: transparent;
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  text-decoration: none;
+}
+.btn-outline:hover {
+  border-color: rgba(200,153,42,0.6);
+  color: var(--gold);
+  transform: translateY(-1px);
+}
+
+/* ─── Noise SVG inline ─── */
+@layer utilities {
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  }
+}
